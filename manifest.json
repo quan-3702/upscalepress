@@ -1,0 +1,17 @@
+{
+  "name": "UpscalePress - AI Image Upscaler & Enhancer",
+  "short_name": "UpscalePress",
+  "description": "Make small, blurry photos and drawings 2×, 4× or 8× bigger and sharper with AI on your own computer. Works offline.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#be123c",
+  "theme_color": "#be123c",
+  "categories": ["photo", "productivity", "utilities"],
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "icon-512-maskable.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "file_handlers": [{ "action": "./", "accept": { "image/*": [".jpg", ".jpeg", ".png", ".webp", ".bmp", ".gif"] } }]
+}

@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>UpscalePress - AI Image Upscaler &amp; Enhancer</title>
+  <meta name="description" content="Make small, blurry photos and drawings 2×, 4× or 8× bigger and sharper with AI on your own computer. Real-ESRGAN, noise removal, batch. Works offline, nothing is uploaded.">
+  <meta name="theme-color" content="#be123c">
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="icon-192.png">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand"><img src="icon-192.png" alt="" width="30" height="30"><span>UpscalePress</span></div>
+    <div class="top-btns">
+      <button id="addBtn" class="primary">＋ Add pictures</button>
+      <button id="allBtn" class="tb">⚡ Upscale all <span class="pro-tag">PRO</span></button>
+      <button id="moreBtn" class="tb" aria-label="More">☰</button>
+      <button id="proBtn" class="pro-btn">★ Get Pro</button>
+    </div>
+    <div id="menu" class="menu" hidden>
+      <button id="saveAllBtn">⬇ Save all finished pictures… <span class="pro-tag">PRO</span></button>
+      <button id="storageBtn">💽 Storage used on this computer</button>
+      <hr>
+      <button id="trialBtn">🎁 Try Pro free for 7 days</button>
+      <button id="trialEndBtn" hidden>End the Pro trial</button>
+      <a href="help.html" target="_blank" rel="noopener">❓ How to use UpscalePress</a>
+      <a href="mailto:thequan03072002@gmail.com?subject=UpscalePress%20feedback">✉ Feedback &amp; support</a>
+      <button id="aboutBtn">ℹ About UpscalePress</button>
+    </div>
+    <input id="fileIn" type="file" accept="image/*" multiple hidden>
+  </header>
+
+  <main class="layout">
+    <aside class="left">
+      <div class="lib-head"><h3>🖼 Pictures</h3><span id="libCount" class="muted small"></span></div>
+      <div id="libList" class="lib"></div>
+      <p class="fb-note">💬 Something not working the way you want? Tell me – <a href="mailto:thequan03072002@gmail.com?subject=UpscalePress%20feedback">thequan03072002@gmail.com</a>. I read every message and improve the app.</p>
+    </aside>
+
+    <section class="stage">
+      <div id="empty" class="empty">
+        <div class="drop" id="drop">
+          <div class="big">🔍</div>
+          <h1>Make small pictures big and sharp</h1>
+          <p>Drop a photo, an old picture, a screenshot, a logo or a drawing here. The AI makes it <b>2×, 4× or 8× bigger</b> and adds real detail instead of blur – on this computer. <strong>Nothing is uploaded.</strong></p>
+          <div class="row-btns center"><button id="addBtn2" class="primary big-btn">＋ Add pictures</button></div>
+          <p class="muted small">JPG, PNG, WEBP, BMP, GIF · free: results up to 4096 pixels · Pro: up to 16000 pixels</p>
+          <p id="gpuNote" class="hint"></p>
+        </div>
+      </div>
+
+      <div id="view" hidden>
+        <div class="vhead">
+          <input id="title" class="title-in" type="text" maxlength="120" aria-label="Name">
+          <span id="info" class="muted small"></span>
+        </div>
+        <div class="panel">
+          <label class="field inline">AI model <select id="model"></select></label>
+          <label class="field inline">Make it <select id="scale"><option value="2">2× bigger</option><option value="3">3× bigger</option><option value="4">4× bigger</option><option value="8">8× bigger (Pro)</option></select></label>
+          <label class="field inline" id="dnRow">Remove noise <input id="denoise" type="range" min="0" max="1" step="0.1"><b id="dnV"></b></label>
+          <span id="outInfo" class="muted small"></span>
+          <span class="spacer"></span>
+          <button id="goBtn" class="primary">✨ Upscale</button>
+          <button id="stopBtn" class="ghost" hidden>⏹ Stop</button>
+        </div>
+        <div id="prog" class="progress" hidden><div class="pbar"><i id="pfill"></i></div><span id="ptext" class="muted small"></span></div>
+        <div id="errBox" class="err" hidden></div>
+        <div class="viewer" id="viewer">
+          <div class="cmp" id="cmp">
+            <canvas id="cvAfter"></canvas>
+            <div class="before" id="beforeWrap"><canvas id="cvBefore"></canvas></div>
+            <div class="handle" id="handle"><span>⇆</span></div>
+            <span class="lab l">Before</span><span class="lab r" id="labAfter">After</span>
+          </div>
+        </div>
+        <div class="bar">
+          <label class="check"><input id="zoom1" type="checkbox"> 🔎 Real size (1:1) – drag to move</label>
+          <span class="spacer"></span>
+          <label class="field inline">Save as <select id="fmt"><option value="png">PNG (best)</option><option value="jpeg">JPG</option><option value="webp">WEBP</option></select></label>
+          <button id="saveBtn" class="primary" disabled>⬇ Save</button>
+          <button id="delBtn" class="ghost danger" title="Remove this picture">🗑</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <dialog id="proDialog" class="dlg">
+    <h2>UpscalePress Pro</h2>
+    <p class="muted">One-time purchase. Yours forever on this Microsoft account. No subscription, ever.</p>
+    <ul class="pro-list">
+      <li><strong>Best detail</strong> model for photos and <strong>Drawings &amp; anime</strong> model</li>
+      <li><strong>8× bigger</strong> and results up to <strong>16000 pixels</strong> <span class="muted">(free: 4096)</span></li>
+      <li><strong>Upscale all</strong> your pictures in one go and <strong>save all</strong></li>
+    </ul>
+    <p class="fb-note">💬 Something not working the way you want? Tell me – <a href="mailto:thequan03072002@gmail.com?subject=UpscalePress%20feedback">thequan03072002@gmail.com</a>. I read every message and improve the app.</p>
+    <p id="proMsg" class="pro-msg" hidden></p>
+    <div class="row-btns">
+      <button id="buyBtn" class="primary" autofocus>Unlock Pro</button>
+      <button id="restoreBtn" class="ghost">Restore purchase</button>
+      <button id="closePro" class="ghost">Not now</button>
+    </div>
+  </dialog>
+
+  <dialog id="aboutDialog" class="dlg">
+    <h2>UpscalePress</h2>
+    <p>Version 1.0 · Developed by <b>NTQ37</b>.</p>
+    <p class="muted small">UpscalePress™ © 2026 NTQ37. All rights reserved. AI models: Real-ESRGAN by Xintao Wang et al. (BSD-3-Clause), run with ONNX Runtime Web (MIT).</p>
+    <div class="row-btns"><button id="aboutPro" class="primary">★ Activate Pro</button><button id="aboutClose" class="ghost">Close</button></div>
+  </dialog>
+
+  <div id="toast" class="toast" hidden></div>
+  <div id="restartBar" class="restart" hidden>A new version of UpscalePress is ready. <button id="restartBtn" class="primary">Restart now</button></div>
+  <script src="up-core.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
